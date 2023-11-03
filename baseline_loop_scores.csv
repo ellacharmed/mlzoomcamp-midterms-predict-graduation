@@ -1,0 +1,10 @@
+model,train auc,val auc,accuracy,precision,f1_mean,recall
+HistGradientBoostingClassifier(),0.72,0.5891,0.727,0.7415,0.8273,0.9356
+GradientBoostingClassifier(),0.6276,0.5884,0.734,0.7403,0.8338,0.9542
+XGBClassifier(),0.6443,0.5849,0.733,0.7384,0.8336,0.9571
+CatBoostClassifier(),0.6559,0.5834,0.731,0.7378,0.8322,0.9542
+DecisionTreeClassifier(),1.0,0.5818,0.652,0.7475,0.7528,0.7582
+RandomForestClassifier(),0.9994,0.5804,0.703,0.7393,0.807,0.8884
+KNeighborsClassifier(),0.6497,0.5103,0.638,0.7042,0.7625,0.8312
+LogisticRegression(),0.5,0.5,0.699,0.699,0.8228,1.0
+LogisticRegressionCV(),0.5,0.5,0.699,0.699,0.8228,1.0
