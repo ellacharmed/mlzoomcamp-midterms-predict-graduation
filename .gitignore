@@ -165,6 +165,7 @@ cython_debug/
 # project-specific
 /samples
 **/catboost*
+**/lear*
 **.zip
 **.pdf
 **.epub
