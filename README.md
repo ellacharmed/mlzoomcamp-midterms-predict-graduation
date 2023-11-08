@@ -364,12 +364,9 @@ List of classifiers tuned with RandomSearchCV
 
 Confusion matrix to evaluate which model is finally chosen. 
 
-| HistGradientBoost      | Catboost               |
-| ---------------------- | ---------------------- |
-| ![](artifacts/images/hist_cm.png) | ![](artifacts/images/cat_cm.png) |
-
-![](artifacts/images/hist_cm.png)
-![](artifacts/images/cat_cm.png)
+| HistGradientBoost                 | Catboost                         |
+| --------------------------------- | -------------------------------- |
+| ![hist_cm](https://github.com/ellacharmed/mlzoomcamp-midterms-predict-graduation/assets/6437860/d3bd5f8d-658a-4eef-8846-493d732cdbad) | ![cat_cm](https://github.com/ellacharmed/mlzoomcamp-midterms-predict-graduation/assets/6437860/d5b78ccc-786e-456a-b75d-89a391dc9a1b)  |
 
 Decision is based on which has higher precision, recall and f1 mean i.e. which model can identify higher True Negatives and lower False Negatives and False Positives. Based on this, I decided on HistGradientBoost as it has comparable `precision`, `recall`, and `f1_mean` scores with each other (i.e. these don't deviate too much from each other) while also having the higher validation `auc` score between the two.
 
