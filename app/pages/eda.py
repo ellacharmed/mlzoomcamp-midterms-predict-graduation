@@ -19,7 +19,7 @@ st.write(
 )
 
 # Load the data from the URL
-DATA_URL = ('https://raw.githubusercontent.com/ellacharmed/mlzoomcamp-midterms-predict-graduation/main/data/graduation_rate.csv')
+DATA_URL = ('https://github.com/ellacharmed/mlzoomcamp-midterms-predict-graduation/blob/submission/data/graduation_rate.csv')
 
 
 @st.cache_data
