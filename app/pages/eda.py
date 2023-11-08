@@ -19,32 +19,32 @@ st.write(
 )
 
 # Load the data from the URL
-DATA_URL = ('https://github.com/ellacharmed/mlzoomcamp-midterms-predict-graduation/blob/submission/data/graduation_rate.csv')
+DATA_URL = ('https://raw.githubusercontent.com/ellacharmed/mlzoomcamp-midterms-predict-graduation/submission/data/graduation_rate.csv')
 
 
 @st.cache_data
 def load_data(nrows):
-    data = pd.read_csv(DATA_URL, nrows=nrows)
+    data = pd.read_csv(DATA_URL, nrows=nrows, sep=",", on_bad_lines='skip')
     def lowercase(x): return str(x).lower()
     data.rename(lowercase, axis='columns', inplace=True)
+    GRADUATE_THRESHOLD = 5
+    # create a new column called 'target' that is set to 0 if years_to_graduate is below the graduate_threshold, so that I can use mean() on the negative label
+    data['target'] = [0 if years <=
+                    GRADUATE_THRESHOLD else 1 for years in data['years to graduate']]
     return data
-
 
 # Create a text element and let the reader know the data is loading.
 data_load_state = st.text('Loading data...')
-data = load_data(10000)
+data = load_data(5000)
 # Notify the reader that the data was successfully loaded.
 data_load_state.text("Done! (using st.cache_data)")
 
-GRADUATE_THRESHOLD = 5
-# create a new column called 'target' that is set to 0 if years_to_graduate is below the graduate_threshold, so that I can use mean() on the negative label
-data['target'] = [0 if years <=
-                  GRADUATE_THRESHOLD else 1 for years in data['years to graduate']]
 
 if st.checkbox('Show raw data'):
     st.subheader('Raw data, first 5 records')
     data = load_data(5)
     st.write(data)
+
 
 
 tab1, tab2, tab3 = st.tabs(["SAT histogram", "GPAs histogram", "target pie"])
@@ -130,7 +130,7 @@ with tab3:
     fig.update_traces(hole=.4, hoverinfo="label+percent+name")
     fig.update_layout(
         height=600, width=800,
-        title_text="Breakdown of 'years_to_graduate' as percentage of the whole<br>for target==0 (<=5) vs target==1 (>5)",
+        title_text="Breakdown of 'years to graduate' as percentage of the whole<br>for target==0 (<=5) vs target==1 (>5)",
         # Add annotations in the center of the donut pies.
         annotations=[dict(text='<=5', x=0.2, y=0.5, font_size=20, showarrow=False),
                      dict(text='>5', x=0.8, y=0.5, font_size=20, showarrow=False)]
