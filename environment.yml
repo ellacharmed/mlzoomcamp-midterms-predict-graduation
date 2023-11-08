@@ -1,0 +1,20 @@
+# Micromamba environment file
+# https://marketplace.visualstudio.com/items?itemName=corker.vscode-micromamba
+
+name: midterms
+channel_priority: 
+  - flexible
+channels:
+  - conda-forge
+dependencies:
+  - python >=3.10,<3.11
+  - scikit-learn==1.3.1
+  - numpy
+  - pandas
+  - flask
+  - streamlit
+  - tqdm
+  - gunicorn 
+  - requests
+  - plotly
+  - gunicorn

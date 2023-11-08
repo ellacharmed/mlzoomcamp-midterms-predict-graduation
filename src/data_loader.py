@@ -1,16 +1,24 @@
 from abc import ABC, abstractmethod
 
 import pandas as pd
-from dotenv import dotenv_values
-from IPython import display
 from tqdm import tqdm
 
 
 class DataLoader(ABC):
-    '''
+    """
       Provide DataLoader interface for documentation purposes.
       Used for CSVDataLoader and DBDataLoader.
-    '''
+      
+        params
+        -------
+        X : the dataframe being treated
+
+
+        returns
+        -------
+        X : new dataframe with treated outlier values        
+    """      
+
     @abstractmethod
     def combine_files():
         pass
@@ -21,9 +29,19 @@ class DataLoader(ABC):
 
 
 class CSVDataLoader(DataLoader):
-    '''
+    """
       Implements load() method with pandas read_csv functionality
-    '''
+
+        
+        params
+        -------
+        X : the dataframe being treated
+
+
+        returns
+        -------
+        X : new dataframe with treated outlier values        
+    """
 
     def combine_files(self, data_folder_path):
         import glob
@@ -76,7 +94,7 @@ class CSVDataLoader(DataLoader):
         for chunk in tqdm(pd.read_csv(
                 file_path, chunksize=chunk_size),
                 total=total_rows//chunk_size):
-            df = df.append(chunk)
+            df = pd.concat([df, chunk], ignore_index=True)
 
         print('Finished processing the CSV file.')
         print(f'{df.shape = }')
