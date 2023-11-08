@@ -2,7 +2,7 @@
 
 DataTalksClub's [Machine Learning Zoomcamp](https://github.com/DataTalksClub/machine-learning-zoomcamp/blob/master/projects/README.md) Midterm Project
 
-This repository is the submission for the above-mentioned course's `**Midterm Project**` for the 2023 cohort. This midterm is in between Module 6 Trees and Module 8 Deep Learning. The course has 10 modules approximately, lasting for a duration of 4months.  The course is *free* and run by [@Alexey](https://github.com/alexeygrigorev) together with his team of volunteers.
+This repository is the submission for the above-mentioned course's **`Midterm Project`** for the 2023 cohort. This midterm is in between Module 6 Trees and Module 8 Deep Learning. The course has 10 modules lasting for approximately, a duration of 4 months.  The course is *free* and run by [@Alexey](https://github.com/alexeygrigorev) together with his team of volunteers.
 
 ## Table of Contents
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
@@ -43,7 +43,7 @@ This project is a Binary Classification problem.
 
 The objective of this project is to predict if a student is on track to graduate within 5 years of commencing college, using the features documented in the [Data Dictionary](#data-dictionary) below. This is a massive concern for institutes of Higher Learning, as it is expensive to both the student *and* the school to drag a 4-year education to longer than 5 years and beyond
 
-The model attempts to identify students who need help early based on their past performance (high_school gpa) with current performance (college_gpa). Some mitigation examples might include extra tutorials or extra credit programmes, and so on. From the macroeconimics perspective, if students are not graduating, means that we are not replenshing an aging population with enough workers fast enough.
+The model attempts to identify students who need help early based on their past performance (high_school_gpa) with current performance (college_gpa). Some mitigation examples might include extra tutorials or extra credit programmes, and so on. From the macroeconimics perspective, if students are not graduating, means that we are not replenshing an aging population with enough workers fast enough.
 
 It is also meant to identify what features have an impact and which ones have no bearing on a student's performance and the probabilites of them graduating within 5 years.
 
@@ -127,7 +127,7 @@ Target is `graduate_in_5years`
 | 'college_gpa' | Grade point average upon graduating college. (Numerical) | 2.0 to 4.0| float |
 | 'years_to_graduate' | `target` Number of years to graduate college. (Numerical) | | int  |
 
-The data dictionary describes the purpose of each column and how the column names were converted to have '_' underscores instead of spaces and all in lowercase.
+The data dictionary describes the purpose of each column. One of the `preprocessing` steps is to rename the columns to have '_' underscores instead of spaces and standardize all to become lowercase strings.
 
 Certain features also have obvious minimum and maximum accepted ranges and they've been used to clip these columns to be within the min-max range as a way to treat the outlier values.
 
@@ -170,7 +170,7 @@ You can replicate this repository by
   - From the terminal, execute the following command to pull the image from Docker hub. It would then auto-launch the container.
 
     ```bash
-    docker run -it -p 9696:9696 graduate_app:latest
+    docker run -it -p 9696:9696 ellacharmed/midterms_graduate_app:latest
     ```
 </details>
 
@@ -180,7 +180,7 @@ You can replicate this repository by
 
 If you decide to clone this repo, you would also need to configure the Dependency and environment management manually. If you prefer not to use `pipenv`, there is also 
 1. a `requirements.txt` file that you can use with `pip install`, or
-2. a `environment.yml` file that you can use with 
+2. an `environment.yml` file that you can use with 
    - `conda env create -n <ENVNAME> --file environment.yml`
    - `micromamba create -n <ENVNAME> -f environment.yml` 
   (*if -n <ENVNAME> is not explicitly specified, it will use "midterms" from the .yml file*)
@@ -209,12 +209,15 @@ If you decide to clone this repo, you would also need to configure the Dependenc
 
     Alternatively, you could also access the app via local Docker Container using the supplied Dockerfile and run as shown. 
     ```bash
-    docker build -t <image-name>:<tag> .
-    docker tag <image-name>:<tag> <your-username>/<image-name>:1.0
-    docker push <your-username>/<image-name>:1.0
+    (1) docker build -t <image-name>:<tag> .  
+    (2) docker tag <image-name>:<tag> <your-username>/<image-name>:1.0 
+    (3) docker push <your-username>/<image-name>:1.0 
     ```
+    
     where
-    `docker build -t graduate_app:1.0 .` informs docker to build using the -tag '1.0' for image called 'graduate_app'.
+    - `docker build -t graduate_app:1.0 .` informs docker to build using the -tag '1.0' for image called 'graduate_app'
+    - (1) if you just want to use in local machine
+    - (2) & (3) if you want to publish it to Docker Hub registry
 
 - Run Docker image
 
@@ -231,6 +234,7 @@ If you decide to clone this repo, you would also need to configure the Dependenc
     - `8080:8051` default port on local:default streamlit port on docker host
     - `-d` runs in detached mode, ie terminal is free to be used
     - `--rm` container is auto-removed when stopped
+    - after which you can launch `http://localhost:8080/predict` 
 
 </details>
 
@@ -258,7 +262,7 @@ This is a summary of some of the core findings from Exploratoray Data Analysis. 
 
 ![](/artifacts/images/target.png)
 
-- the target has slight imbalance but it is not extreme, at least for those in the train set
+- the target has 70:30 ratio of imbalance, at least for those in the train set
 - more than any other feature, current gpa earned in college is the best indicator of years spent in college to earn that degree
 - one's parents' educational achievements, or lack of paper-qualifications has no bearing on one's own measure of finishing college
 
@@ -362,7 +366,10 @@ Confusion matrix to evaluate which model is finally chosen.
 
 | HistGradientBoost      | Catboost               |
 | ---------------------- | ---------------------- |
-| ![hist_cm](/artifacts/images/hist_cm.png) | ![cat_cm](/artifacts/images/cat_cm.png) |
+| ![](artifacts/images/hist_cm.png) | ![](artifacts/images/cat_cm.png) |
+
+![](artifacts/images/hist_cm.png)
+![](artifacts/images/cat_cm.png)
 
 Decision is based on which has higher precision, recall and f1 mean i.e. which model can identify higher True Negatives and lower False Negatives and False Positives. Based on this, I decided on HistGradientBoost as it has comparable `precision`, `recall`, and `f1_mean` scores with each other (i.e. these don't deviate too much from each other) while also having the higher validation `auc` score between the two.
 
@@ -379,7 +386,7 @@ Remember that,
 
 ## Reproducibility
 
-This Project uses Docker and Streamlit for deployment. Code from notebook was transferred to modules and that means learning OOP, which suprisingly means learning about Paths among other things. Always a gotcha on this one as we have different conventions on Windows and MacOS/Linux regarding `"/"` and `"\"`. Using containers alleviate this confusion, but still need to figure out when your main development machine is on Windows.
+This Project uses Docker and Streamlit for deployment. Code from notebook was transferred to modules and that means learning Object Oriented Programming (OOP) principles, which suprisingly means learning about Paths among other things. Always a gotcha on this one as we have different conventions on Windows and MacOS/Linux regarding `"/"` and `"\"`. Using containers alleviate this confusion, but still need to figure out when your main development machine is on Windows.
 
 ### Exporting notebook to script
 
@@ -408,7 +415,7 @@ stateDiagram
 
 ### Containerization
 
-This project uses Docker which can be build as follows. And then run it locally by going to `http://localhost:8080/predict`.
+This project uses Docker which can be build as follows. And then run it locally and then launching the website at `http://localhost:8080/predict`.
 
 ```python
 docker build -t ellacharmed/midterms_graduate_app:latest .
@@ -430,12 +437,12 @@ Working on an End-to-end Machine Learning project with the aim to deploy it taug
 As the main aim is to learn deployment, my criteria for a dataset is :
 
 - simple, not have too many features
-- straightforward problem statement: **'Prediction of Graduating in 5 Years**
+- straightforward problem statement: **'Prediction of Graduating in 5 Years'**
 - not requiring too much pre-processing and feature-engineering
 
 As it is, I hit a roadblock on using Pipelines and had to revert back to trusty ole DictVectorizer from lessons.
 
-The other factor is in not realizing how our features rely on CSS and other web-framework's UI/UX methodologies to receive inputs and validate said input. I would put greater emphasis on this in capstone first, ahead of hyperparameter tuning so I don't have to reiterate too much and become the hudle, like in this midterms.
+The other factor is in not realizing how our features rely on CSS and other web-framework's UI/UX methodologies to receive inputs and validate said input. I would put greater emphasis on this in capstone first, ahead of hyperparameter tuning so I don't have to reiterate too much and becoming the hurdle to overcome, like in this midterms.
 
 ### Life-cycle of a Machine Learning Model
 
