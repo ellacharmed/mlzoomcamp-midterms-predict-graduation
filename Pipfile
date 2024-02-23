@@ -10,6 +10,8 @@ numpy = "*"
 pandas = "*"
 requests = "*"
 gunicorn = "*"
+streamlit = "*"
+plotly = "*"
 
 [dev-packages]
 scikit-learn-intelex = "*"
@@ -26,6 +28,8 @@ nbformat = "*"
 plotly = "*"
 matplotlib = "*"
 seaborn = "*"
+skimpy = "*"
+xgboost = "*"
 
 [requires]
 python_version = "3.10"

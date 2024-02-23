@@ -9,29 +9,26 @@ EDUCATION_VALUES = {
 }
 
 TARGET_NAME = 'target'
+GRADUATE_THRESHOLD = 5
+# [0 if years <= (5) graduate_threshold else 1 for years in df['years_to_graduate']]
 TARGET_LABELS = ['<= 5 years', '> 5 years']
-COL_TARGET = ['graduate_in_5years']
+# COL_TARGET = ['graduate_in_5years']
 
-TO_DROP = ['act_composite_score', 'high_school_gpa']
+TO_DROP = ['act_composite_score',
+           'high_school_gpa']
 
 COLS_CATEGORICAL = [
     'parental_level_of_education',
 ]
 
 COLS_NUMERICAL = [
-    'act_composite_score',
     'sat_total_score',
     'parental_income',
-    'high_school_gpa',
     'college_gpa',
 ]
 
 COLS_BINARIZE = ['target']
 
-# ----------------------
-# split params
-# ----------------------
-TEST_SIZE = 0.2
 
 # ----------------------
 # hyperparameters tuning - HistGradientBoostingClassifier
@@ -40,7 +37,8 @@ LEARNING_RATE = [0.001, 0.01, 0.1, 1.0]
 MAX_ITER = [100, 500, 1000]
 MAX_DEPTH = [2, 6, 8, 12]
 MIN_SAMPLES_LEAF = [2, 5, 10]
-WEIGHTS = ['balanced', None]
+MAX_LEAF_NODES = [2, 5, 10]
+WEIGHTS = ['balanced', {0:0.3, 1:1}, {0:0.25, 1:0.75}, None]
 
 RANDOM_STATE = [42]
 RANDOM_SEED = [42]
@@ -54,7 +52,7 @@ N_ESTIMATORS = [8, 16, 32]
 
 CRITERION = ['gini', 'entropy', 'log_loss']
 MIN_SAMPLES_SPLIT = [2, 5, 10, 14]
-MAX_LEAF_NODES = [0.5, 2, 5, 10]
+
 MAX_FEATURES = [None, 'sqrt', 'log2']
 SOLVER = ['lbfgs', 'liblinear', 'newton-cg', 'newton-cholesky', 'sag', 'saga']
 PENALTY = ['l1', 'l2', 'elasticnet', None]
